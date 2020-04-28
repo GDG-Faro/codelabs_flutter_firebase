@@ -1,16 +1,13 @@
-# codelabs_flutter_firebase
+# Codelab Flutter Firebase
 
-A new Flutter project.
+GDG-Faro - Flutter Study Jam #3
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Join us for our Flutter Study Jam! 
 
-A few resources to get you started if this is your first Flutter project:
+Together we'll work through Flutter codelabs prepared by Google instructors. You will be able to get hands-on experience with Flutter and build a Flutter app while learning the fundamentals.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+[Meetup event](https://www.meetup.com/GDG-Faro/events/270138189/)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[Codelabs tutorial](https://codelabs.developers.google.com/codelabs/flutter-firebase/#0)
