@@ -21,11 +21,74 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String id;
+  final db = Firestore.instance;
+  var _formKey = GlobalKey<FormState>();
+  String name;
+
+  void createData() async {
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      DocumentReference ref = await db.collection('baby').add(
+        {
+          'name': '$name',
+          'votes': 0,
+        },
+      );
+      setState(() => id = ref.documentID);
+    }
+  }
+
+  void _showAddForm() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              content: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text("Add a new baby name:"),
+                TextFormField(
+                  autofocus: true,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => name = value,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        createData();
+                        Navigator.of(context, rootNavigator: true)
+                            .pop('dialog');
+                      }
+                    },
+                    child: Text('Submit'),
+                  ),
+                ),
+              ],
+            ),
+          ));
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Baby Name Votes')),
       body: _buildBody(context),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _showAddForm,
+        tooltip: 'Add baby name',
+        child: Icon(Icons.add),
+      ),
     );
   }
 
