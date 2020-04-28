@@ -21,7 +21,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String id;
   final db = Firestore.instance;
   var _formKey = GlobalKey<FormState>();
   String name;
@@ -35,13 +34,11 @@ class _MyHomePageState extends State<MyHomePage> {
           'votes': 0,
         },
       );
-      setState(() => id = ref.documentID);
     }
   }
 
   void deleteData(DocumentSnapshot doc) async {
     await db.collection('baby').document(doc.documentID).delete();
-    setState(() => id = null);
   }
 
   void _showAddForm() {
@@ -111,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       child: Padding(
-        key: ValueKey(record['name']),
+        key: ValueKey(record.documentID),
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: Container(
           decoration: BoxDecoration(
@@ -130,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('baby').snapshots(),
+      stream: db.collection('baby').snapshots(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return LinearProgressIndicator();
@@ -144,4 +141,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
